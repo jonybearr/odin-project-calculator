@@ -61,12 +61,17 @@ function displayUpdate(event) {
     //button pressed logic
     //if clear button is pressed, clear the display, clear variables
     if(newThing=="clear") {
-        displayedString="";
+        displayedString="0";
         operation = '';
         value1 = '';
         value2 = '';
-    //if operator button is pressed, store in variable
+        answer='';
+    //if operator button is pressed
     } else if(newThing=='+'||newThing=='-'||newThing=='*'||newThing=='/') {
+        //check if value1 exists
+        if(value1==''){
+            value1=answer;
+        }
         //update variable
         operation = newThing;
         console.log('new operator is ' +newThing)
@@ -79,25 +84,30 @@ function displayUpdate(event) {
         //update display with answer
         displayedString=answer;
         //update variables to match logic
+        //clear all variables except answer
+        operation = '';
+        value1 = '';
+        value2 = '';
         
     //if operator exists, any new numbers are for the second value
     } else if(operation!='') {
-        //if the value2 is empty, 
-        if(value2=='') {
-            //store previous number in value 1
-            value1=displayedString;
-            //clear screen of previous number, and update new number
+        //clear screen of previous number, and update new number
+        displayedString=newThing;
+        //update value2
+        value2=newThing;
+
+            
+    //first value
+    } else {
+        //check if it is the first digit of the first value
+        if(value1==''){
             displayedString=newThing;
-            //update value2
-            value2=newThing;
+            value1=newThing;
         } else {
             displayedString=displayedString+newThing;
-            value2=displayedString;
+            value1=displayedString;
         }
-            
-    
-    } else {
-        displayedString=displayedString+newThing;
+        
     }
 
     //connect to html
